@@ -49,8 +49,8 @@ class ScootersController(Connector):
         """Return `True` if scooter is available, else `False`."""
 
         with super().connection.cursor(buffered=True) as cursor:
-            cursor.execute('select count(*) from Scooters where ID=%s', (scooter_id,))
-            return True if cursor.fetchone() else False
+            cursor.execute('select isAvailable from Scooters where ID=%s', (scooter_id,))
+            return True if cursor.fetchone()[0] else False
 
     def is_booked(self, scooter_id: int) -> bool:
         """Return `True` if scooter is booked by smb, else `False`."""
