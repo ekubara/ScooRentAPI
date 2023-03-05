@@ -8,13 +8,13 @@ from scoorent.security.dependencies import (
     authorize_user, allow_get_requests, allow_create_requests, allow_delete_requests
 )
 from scoorent.types.models.common_models import GoodResponse
-from scoorent.types.models.scooters import Scooter, InputScooterName, InputScooterID
+from scoorent.types.models.scooters import Scooter, InputScooterName
 from scoorent.utils.database.controllers.scooters_controller import scooters_controller
 from scoorent.utils.database.controllers.users_controller import users_controller
 
 
 router = APIRouter(
-    tags=['scooters'],
+    tags=['Scooters'],
     dependencies=[Depends(authorize_user)]
 )
 

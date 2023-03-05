@@ -10,7 +10,7 @@ from scoorent.security.dependencies import (
 
 
 router = APIRouter(
-    tags=['admins'],
+    tags=['Admins'],
     dependencies=[Depends(authorize_user)]
 )
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
@@ -24,38 +24,33 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 async def get_admin(
         admin_id: int | None = Query(
             default=None,
-            description='Admin\'s identifier to get his data from database'
+            description='ID of an admin to get his data.'
         )
 ):
-    """Return admin's data model."""
+    """Return data of a provided admin."""
 
     if not admin_id:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='Invalid admin id'
+            detail='Admin does not exist.'
         )
     return admins_controller.get_admin(payload=admin_id)
 
 
 @router.post(
     '/createAdmin',
+    status_code=status.HTTP_201_CREATED,
     dependencies=[Depends(allow_create_requests)],
-    response_model=Admin,
-    response_description='Created admin data model',
-    status_code=status.HTTP_201_CREATED
 )
 async def create_admin(user_form: OAuth2PasswordRequestForm = Depends()):
-    """Create admin and return his data model."""
+    """Create admin."""
 
     if admins_controller.is_existing_admin(payload=user_form.username):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='Admin already exists'
+            detail='Admin already exists.'
         )
-    return admins_controller.create_admin(
-        username=user_form.username,
-        password=user_form.password
-    )
+    return GoodResponse()
 
 
 @router.delete(
@@ -63,8 +58,8 @@ async def create_admin(user_form: OAuth2PasswordRequestForm = Depends()):
     response_model=GoodResponse,
     dependencies=[Depends(allow_delete_requests)]
 )
-async def delete_admin(admin_id: int = Query(description='Admin\'s identifier to delete him from database')):
-    """Delete provided admin from database."""
+async def delete_admin(admin_id: int = Query(description='ID of an admin to delete.')):
+    """Delete admin."""
 
     if not admins_controller.is_existing_admin(payload=admin_id, filter_=GetAdminFilter.by_id):
         raise HTTPException(

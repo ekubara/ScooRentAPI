@@ -1,7 +1,6 @@
 from typing import Union
 
 from fastapi import APIRouter, Body, Depends, Query, status
-from fastapi.responses import JSONResponse
 
 from scoorent.exceptions import (
     EmailAlreadyInUse, IncorrectPhoneNumber, ProvideAnyParameter,
@@ -17,29 +16,27 @@ from scoorent.utils.database.controllers.users_controller import users_controlle
 
 
 router = APIRouter(
-    tags=['users'],
-    dependencies=[Depends(authorize_user)],
-    responses={status.HTTP_404_NOT_FOUND: {'description': 'Not found'}}
+    tags=['Users'],
+    dependencies=[Depends(authorize_user)]
 )
 
 
 @router.get(
     '/getUser',
     dependencies=[Depends(allow_get_requests)],
-    response_description='Selected user data model',
     response_model=Union[User, tuple[User, ...]]
 )
 async def get_user_data(
         user_id: int | None = Query(
             default=None,
-            description='Provide user\'s identifier to get his JSON data model'
+            description='ID of a user to get his data.'
         ),
         get_all: bool = Query(
             default=False,
-            description='Set `get_all=true` to get all users database has'
+            description='Set `get_all=true` to get all users database has.'
         )
 ):
-    """Get user's data model by provided identifier."""
+    """Return the provided user's data."""
 
     if not user_id and not get_all:
         raise ProvideAnyParameter
@@ -55,13 +52,13 @@ async def get_user_data(
 
 @router.post(
     '/createUser',
-    dependencies=[Depends(allow_create_requests)],
     response_model=User,
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(allow_create_requests)]
 )
 async def create_user(
         user_data: InputUser = Body(
-            description='User\'s JSON model to create new user',
+            description='Data of a new user to create.',
             example={
                 'phoneNumber': '+7 666 555 44 33',
                 'firstName': 'Роман',
@@ -70,7 +67,7 @@ async def create_user(
             }
         )
 ):
-    """Create a user."""
+    """Create user."""
 
     if not is_phone_number(user_data.phone_number):
         raise IncorrectPhoneNumber(user_data.phone_number)
@@ -93,8 +90,8 @@ async def create_user(
 
 
 @router.delete('/deleteUser', response_model=GoodResponse, dependencies=[Depends(allow_delete_requests)])
-async def delete_user(user_id: int = Query(description='User\'s identifier to delete him from database')):
-    """Delete user from service's database."""
+async def delete_user(user_id: int = Query(description='ID of a user to delete.')):
+    """Delete user."""
 
     if not users_controller.is_user(payload=user_id):
         raise UserDoesNotExist(user_id)
