@@ -42,8 +42,8 @@ CREATE TABLE Cards(
 CREATE TABLE Orders(
     ID INT AUTO_INCREMENT PRIMARY KEY,
     customerID INT,
-    orderAmount decimal(12, 2),
-    isActive BOOLEAN NOT NULL DEFAULT true,
-    orderStartDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    orderFinishDate TIMESTAMP
+    price decimal(12, 2),
+    isActive BOOLEAN NOT NULL DEFAULT false,
+    bookingStartedAt TIMESTAMP DEFAULT NULL,
+    bookingFinishedAt TIMESTAMP DEFAULT NULL
 );  -- Create orders table.
