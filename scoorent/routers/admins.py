@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 
 from scoorent.types.models.admins import Admin
 from scoorent.types.models.common_models import GoodResponse
-from scoorent.utils.database.controllers.admins import admins_controller, GetAdminFilter
+from scoorent.database.controllers.admins import admins_controller, GetAdminFilter
 from scoorent.security.dependencies import (
     authorize_user, allow_get_requests, allow_create_requests, allow_delete_requests
 )

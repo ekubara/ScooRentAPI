@@ -12,7 +12,7 @@ from scoorent.middlewares import prettify_phone_number, is_phone_number
 from scoorent.security.dependencies import (
     authorize_user, allow_get_requests, allow_create_requests, allow_delete_requests
 )
-from scoorent.utils.database.controllers.users import users_controller, GetUserFilter
+from scoorent.database.controllers.users import users_controller, GetUserFilter
 
 
 router = APIRouter(

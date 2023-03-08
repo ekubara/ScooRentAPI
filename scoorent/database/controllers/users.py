@@ -2,12 +2,13 @@ from sqlalchemy import delete, select, func
 
 from .. import database_session, save_changes
 from ..tables import Cards, Users
+from .cards import CardsController
 from scoorent.types.enumerations.users import GetUserFilter
 from scoorent.types.models.cards import Card, InternalCard
 from scoorent.types.models.users import User, InputUser
 
 
-class UsersController:
+class UsersController(CardsController):
     """This class is controller for `Users` table."""
 
     def __init__(self):
