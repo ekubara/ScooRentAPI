@@ -8,6 +8,7 @@ class Admin(BaseModel):
     username: str
     can_get: bool = Field(default=True, alias='canGet')
     can_create: bool = Field(default=True, alias='canCreate')
+    can_edit: bool = Field(default=True, alias='canEdit')
     can_delete: bool = Field(default=True, alias='canDelete')
     registration_date: datetime = Field(alias='registrationDate')
 

@@ -5,7 +5,7 @@ from jose import jwt
 from scoorent.data.settings import security_settings
 from scoorent.types.models.security import Permissions
 from scoorent.middlewares.security import verify_entity
-from scoorent.utils.database.controllers.admins_controller import admins_controller
+from scoorent.utils.database.controllers.admins import admins_controller
 
 
 def create_access_token(

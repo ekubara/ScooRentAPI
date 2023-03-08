@@ -4,7 +4,7 @@ from jose.jwt import JWTError
 from . import oauth2_scheme
 from scoorent.types.models.security import TokenData
 from scoorent.middlewares.security import decode_token
-from scoorent.utils.database.controllers.admins_controller import admins_controller
+from scoorent.utils.database.controllers.admins import admins_controller
 
 
 def authorize_user(token: str = Depends(oauth2_scheme)):

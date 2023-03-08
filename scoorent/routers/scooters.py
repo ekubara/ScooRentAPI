@@ -9,8 +9,8 @@ from scoorent.security.dependencies import (
 )
 from scoorent.types.models.common_models import GoodResponse
 from scoorent.types.models.scooters import Scooter, InputScooterName
-from scoorent.utils.database.controllers.scooters_controller import scooters_controller
-from scoorent.utils.database.controllers.users_controller import users_controller
+from scoorent.utils.database.controllers.scooters import scooters_controller
+from scoorent.utils.database.controllers.users import users_controller
 
 
 router = APIRouter(

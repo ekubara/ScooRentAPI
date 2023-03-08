@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 
 from scoorent.types.models.admins import Admin
 from scoorent.types.models.common_models import GoodResponse
-from scoorent.utils.database.controllers.admins_controller import admins_controller, GetAdminFilter
+from scoorent.utils.database.controllers.admins import admins_controller, GetAdminFilter
 from scoorent.security.dependencies import (
     authorize_user, allow_get_requests, allow_create_requests, allow_delete_requests
 )
@@ -40,7 +40,7 @@ async def get_admin(
 @router.post(
     '/createAdmin',
     status_code=status.HTTP_201_CREATED,
-    dependencies=[Depends(allow_create_requests)],
+    dependencies=[Depends(allow_create_requests)]
 )
 async def create_admin(user_form: OAuth2PasswordRequestForm = Depends()):
     """Create admin."""
@@ -50,6 +50,7 @@ async def create_admin(user_form: OAuth2PasswordRequestForm = Depends()):
             status_code=status.HTTP_404_NOT_FOUND,
             detail='Admin already exists.'
         )
+    admins_controller.create_admin(username=user_form.username, password=user_form.password)
     return GoodResponse()
 
 

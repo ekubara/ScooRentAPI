@@ -12,7 +12,7 @@ from scoorent.middlewares import prettify_phone_number, is_phone_number
 from scoorent.security.dependencies import (
     authorize_user, allow_get_requests, allow_create_requests, allow_delete_requests
 )
-from scoorent.utils.database.controllers.users_controller import users_controller, GetUserFilter
+from scoorent.utils.database.controllers.users import users_controller, GetUserFilter
 
 
 router = APIRouter(
@@ -84,9 +84,7 @@ async def create_user(
 
     if users_controller.is_user(payload=user_data.email, filter_=GetUserFilter.by_email):
         raise EmailAlreadyInUse(user_data.email)
-
-    created_user = users_controller.create_user(user=user_data)
-    return created_user
+    return users_controller.create_user(user=user_data)
 
 
 @router.delete('/deleteUser', response_model=GoodResponse, dependencies=[Depends(allow_delete_requests)])

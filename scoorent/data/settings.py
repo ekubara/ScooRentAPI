@@ -11,10 +11,15 @@ class SecuritySettings(BaseSettings):
 
 class ProjectSettings(BaseSettings):
     data_directory: str = getcwd() + "/data/"
+    env_file: str = data_directory + ".env"
+
+
+class DatabaseSettings(BaseSettings):
+    username: str
+    password: str
+    database_name: str
 
 
 project_settings = ProjectSettings()
-security_settings = SecuritySettings(
-    _env_file=project_settings.data_directory+'.env',
-    _env_file_encoding='utf-8'
-)
+security_settings = SecuritySettings(_env_file=project_settings.env_file)
+database_settings = DatabaseSettings(_env_file=project_settings.env_file)

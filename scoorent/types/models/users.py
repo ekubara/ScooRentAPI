@@ -23,7 +23,7 @@ class InputUser(BaseModel):
     phone_number: str = Field(alias='phoneNumber')
     first_name: str = Field(alias='firstName')
     last_name: str = Field(alias='lastName')
-    email: str
+    email: EmailStr
 
     class Config:
         allow_population_by_field_name = True
